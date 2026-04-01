@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Tag Generator{% endblock %}
+
+{% block css %}
+{{ block.super }}
+<link rel="stylesheet" href="{% static 'NeuraNotes/Css/ai-tools.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container pt-3 pb-5 ai-tool-page">
+  <form action="{% url 'tag_page' %}" method="post" id="noteForm">
+    {% csrf_token %}
+    <div class="ai-tool-card">
+      <div class="ai-tool-header">
+        <h2 class="ai-tool-title">Tag Generator</h2>
+        <p class="ai-tool-subtitle">Create useful tags from your note with one click.</p>
+      </div>
+
+      <div class="row mb-3">
+        <div class="col-md-6 mb-2 mb-md-0">
+          <label for="inputNote" class="form-label ai-tool-label">Input Text</label>
+          <textarea id="inputNote" name="note" class="form-control ai-tool-textarea" rows="10" placeholder="Start Writing Something Amazing..."></textarea>
+        </div>
+        <div class="col-md-6">
+          <label for="outputNote" class="form-label ai-tool-label">AI Output</label>
+          <textarea id="outputNote" name="output" class="form-control ai-tool-textarea" rows="10" placeholder="AI will generate output here..." readonly></textarea>
+        </div>
+      </div>
+
+      <div class="ai-tool-actions">
+        <button type="submit" class="btn btn-primary ai-tool-btn">Auto Tag</button>
+        <a href="{% url 'dashboard' %}" class="btn ai-tool-btn ai-tool-back">Back</a>
+      </div>
+    </div>
+  </form>
+</div>
+
+<script>
+  function autoResizeTextarea(element) {
+    element.style.height = "auto";
+    element.style.height = element.scrollHeight + "px";
+  }
+
+  document.querySelectorAll(".ai-tool-textarea").forEach((textarea) => {
+    autoResizeTextarea(textarea);
+    textarea.addEventListener("input", () => autoResizeTextarea(textarea));
+    textarea.addEventListener("paste", () => {
+      setTimeout(() => autoResizeTextarea(textarea), 0);
+    });
+  });
+
+  async function aiResponse(note) {
+    const csrftoken = document.querySelector("[name=csrfmiddlewaretoken]").value;
+    const response = await fetch("{% url 'tag' %}", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-CSRFToken": csrftoken
+      },
+      body: JSON.stringify({ note: note })
+    });
+
+    const data = await response.json();
+    document.getElementById("outputNote").value = data.result;
+    autoResizeTextarea(document.getElementById("outputNote"));
+  }
+
+  document.getElementById("noteForm").addEventListener("submit", (e) => {
+    e.preventDefault();
+    const note = document.getElementById("inputNote").value;
+    aiResponse(note);
+  });
+</script>
+{% endblock %}

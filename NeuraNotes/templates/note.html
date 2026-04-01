@@ -1,0 +1,121 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}Note Page{% endblock %}
+
+{% block css %}
+{{ block.super }}
+<link rel="stylesheet" href="{% static 'NeuraNotes/Css/note.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="container pt-3 pb-5 note-page">
+<form method="post">
+    {% csrf_token %}
+    <div class="notes-card">
+
+        <div class="note-heading">
+            <h2 class="note-title">Write Your Note</h2>
+            <p class="note-subtitle">Keep your ideas simple, clear, and easy to manage.</p>
+        </div>
+
+        <input id="titleInput" class="title-input w-100 mb-4" placeholder="Title your note..." name="title1" value="{{ Notes.title|default:'' }}" />
+
+        <div class="action-row mb-3">
+            <button type="button" id="autotitleBtn" class="btn ai-btn btn-primary">Auto Title</button>
+            <button type="button" id="summarizeBtn" class="btn ai-btn btn-info">Summarize</button>
+            <button type="button" id="grammerBtn" class="btn ai-btn btn-warning">Grammar</button>
+            <button type="button" id="autotagBtn" class="btn ai-btn btn-light">Auto Tag</button>
+            <button type="button" id="polishBtn" class="btn ai-btn btn-success">Rewrite & Polish</button>
+        </div>
+
+        <label class="form-label note-label">Notes</label>
+        <textarea id="noteInput" class="form-control note-area" placeholder="Start writing something amazing..." name="content1">{{ Notes.content|default:'' }}</textarea>
+
+        <label class="form-label note-label mt-3">AI Auto-generated Title</label>
+        <textarea id="aiTitleOutput" name="ai_title1" class="form-control note-area" placeholder="Auto title will show here...">{{ Notes.ai_title|default:'' }}</textarea>
+
+        <label class="form-label note-label mt-3">AI Summary</label>
+        <textarea id="aiSummaryOutput" name="ai_summary1" class="form-control note-area" placeholder="Summary will show here...">{{ Notes.ai_summary|default:'' }}</textarea>
+
+        <label class="form-label note-label mt-3">AI Grammar</label>
+        <textarea id="aiGrammarOutput" name="ai_grammar1" class="form-control note-area" placeholder="Grammar output will show here...">{{ Notes.ai_grammar|default:'' }}</textarea>
+
+        <label class="form-label note-label mt-3">AI Tag</label>
+        <textarea id="aiTagOutput" name="ai_tag1" class="form-control note-area" placeholder="All Tags output will show here...">{{ Notes.ai_tag|default:'' }}</textarea>
+
+        <label class="form-label note-label mt-3">AI Polish</label>
+        <textarea id="aiPolishOutput" name="ai_polish1" class="form-control note-area" placeholder="Polished output will show here...">{{ Notes.ai_polish|default:'' }}</textarea>
+
+        <button type="submit" class="btn save-note-btn mt-4">{% if Notes %}Update Note{% else %}Save Note{% endif %}</button>
+
+    </div>
+</form>
+</div>
+
+<script>
+function autoResizeTextarea(element) {
+    element.style.height = "auto";
+    element.style.height = element.scrollHeight + "px";
+}
+
+document.querySelectorAll(".note-area").forEach(function (textarea) {
+    autoResizeTextarea(textarea);
+
+    textarea.addEventListener("input", function () {
+        autoResizeTextarea(textarea);
+    });
+
+    textarea.addEventListener("paste", function () {
+        setTimeout(function () {
+            autoResizeTextarea(textarea);
+        }, 0);
+    });
+});
+
+async function callAI(url, text, outputId, useAsTitle = false) {
+    const response = await fetch(url, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "X-CSRFToken": "{{ csrf_token }}"
+        },
+        body: JSON.stringify({ note: text })
+    });
+
+    const data = await response.json();
+    document.getElementById(outputId).value = data.result || "";
+    autoResizeTextarea(document.getElementById(outputId));
+
+    if (useAsTitle && data.result) {
+        document.getElementById('titleInput').value = data.result;
+    }
+}
+
+document.getElementById("autotitleBtn").addEventListener("click", function () {
+    const note = document.getElementById("noteInput").value;
+    callAI("{% url 'title' %}", note, "aiTitleOutput", true);
+});
+
+document.getElementById("summarizeBtn").addEventListener("click", function () {
+    const note = document.getElementById("noteInput").value;
+    callAI("{% url 'summarize' %}", note, "aiSummaryOutput", false);
+});
+
+document.getElementById("grammerBtn").addEventListener("click", function () {
+    const note = document.getElementById("noteInput").value;
+    callAI("{% url 'grammar' %}", note, "aiGrammarOutput", false);
+});
+document.getElementById("autotagBtn").addEventListener("click", function () {
+    const note = document.getElementById("noteInput").value;
+    callAI("{% url 'tag' %}", note, "aiTagOutput", false);
+});
+document.getElementById("polishBtn").addEventListener("click", function () {
+    const note = document.getElementById("noteInput").value;
+    callAI("{% url 'polish' %}", note, "aiPolishOutput", false);
+});
+</script>
+
+{% endblock %}

@@ -1,0 +1,54 @@
+body {
+  background-color: #11182b;
+}
+
+.dashboard-page {
+  margin-top: 80px;
+}
+
+.newnotes:hover,
+.ai_tools:hover {
+  transform: scale(1.1);
+  transform-origin: bottom;
+  transition: transform 0.8s ease;
+}
+
+.column {
+  height: 150px;
+  background-color: #1c2538;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  transform-origin: center;
+  will-change: transform;
+}
+
+.column:hover {
+  transform: scale(1.08);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+  border-color: #9d84ed;
+}
+
+#grammer:hover {
+  transition: 0.5s;
+  box-shadow: 0 0 0 10px #7461fd;
+}
+
+#auto:hover {
+  transition: 0.5s;
+  box-shadow: 0 0 0 10px #f85163;
+}
+
+#smart:hover {
+  transition: 0.5s;
+  box-shadow: 0 0 0 10px #fbbf24;
+}
+
+#tags:hover {
+  transition: 0.5s;
+  box-shadow: 0 0 0 10px #34d399;
+}
+
+#polish:hover {
+  transition: 0.5s;
+  box-shadow: 0 0 0 10px white;
+}

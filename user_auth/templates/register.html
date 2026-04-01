@@ -1,0 +1,90 @@
+{% load static %}
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>{% block title %} Register Page {% endblock %}</title>
+
+  <!-- Bootstrap CDN -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- FontAwesome CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="{% static 'NeuraNotes/Css/style.css' %}">
+
+</head>
+
+<body class="light-mode auth-page">
+
+<div class="mode-toggle">
+  <i class="fa-solid fa-moon" id="moonIcon"></i>
+  <i class="fa-solid fa-sun d-none" id="sunIcon"></i>
+</div>
+
+<div class="container d-flex justify-content-center align-items-center min-vh-100">
+  <div class="card login-card p-4 shadow-lg">
+    {% if error %}
+    <div class="alert alert-warning alert-dismissible fade show mb-4" role="alert">
+      <strong class="text-danger">Error:- {{error}}</strong>
+      <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+    {% endif %}
+
+    <h2 class="text-center mb-4 auth-title">
+      <i class="fa-solid fa-user-plus me-2"></i>Register
+    </h2>
+
+    <form action="{% url 'register' %}" method="POST">
+
+      {% csrf_token %}
+      <div class="mb-3">
+        <label class="form-label">User Name</label>
+        <div class="input-group">
+          <span class="input-group-text"><i class="fa-solid fa-id-card"></i></span>
+          <input type="text" class="form-control" id="regName" placeholder="Enter name" name="username">
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Email</label>
+        <div class="input-group">
+          <span class="input-group-text"><i class="fa-solid fa-at"></i></span>
+          <input type="email" class="form-control" id="regEmail" placeholder="Enter email" name="email">
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Password</label>
+        <div class="input-group">
+          <span class="input-group-text"><i class="fa-solid fa-key"></i></span>
+          <input type="password" class="form-control" id="regPassword" placeholder="Enter password" name="password">
+        </div>
+      </div>
+
+      <button type="submit" class="btn btn-dark w-100 auth-btn">
+        Register
+      </button>
+
+      <p class="text-center mt-3">
+        Already have account?
+        <a href="{% url 'login' %}">Login</a>
+      </p>
+
+    </form>
+
+  </div>
+</div>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Custom JS -->
+<script src="{% static 'NeuraNotes/Javascript/lightanddarkmode.js' %}"></script>
+
+</body>
+</html>

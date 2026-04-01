@@ -1,0 +1,120 @@
+body {
+  background-color: #1c2538;
+}
+
+.note-page {
+  background-color: #1c2538;
+}
+
+.notes-card {
+  background-color: #1C2538;
+  border: 1px solid #dbe3f0;
+  border-radius: 18px;
+  padding: 28px;
+  box-shadow: 0 14px 30px rgba(15, 23, 43, 0.08);
+}
+
+.note-heading {
+  margin-bottom: 22px;
+}
+
+.note-title {
+  margin: 0 0 8px;
+  color: #ffffff;
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.note-subtitle {
+  margin: 0;
+  color: #ffffff;
+  font-size: 0.98rem;
+  font-weight: 600;
+}
+
+.title-input,
+.note-area {
+  border: 1px solid #cfd9e6;
+  border-radius: 12px;
+  padding: 14px 16px;
+  background: #f9fbff;
+  color: #1a2533;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease, background-color 0.25s ease;
+}
+
+.title-input {
+  min-height: 56px;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.note-area {
+  min-height: 140px;
+  resize: none;
+  overflow: hidden;
+}
+
+.title-input:focus,
+.note-area:focus {
+  background: #ffffff;
+  border-color: #7aa2ff;
+  box-shadow: 0 0 0 0.2rem rgba(74, 122, 255, 0.14);
+  outline: none;
+}
+
+.note-label {
+  color: #ffffff;
+  font-weight: 700;
+}
+
+.action-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.ai-btn {
+  border: none;
+  border-radius: 10px;
+  padding: 10px 16px;
+  font-weight: 600;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+}
+
+.ai-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 18px rgba(15, 23, 43, 0.14);
+  filter: brightness(0.97);
+}
+
+.save-note-btn {
+  background: #1d4ed8;
+  color: #ffffff;
+  border: none;
+  border-radius: 12px;
+  padding: 12px 24px;
+  font-weight: 700;
+  transition: background-color 0.25s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.save-note-btn:hover {
+  background: #163ea9;
+  color: #ffffff;
+  transform: translateY(-1px);
+  box-shadow: 0 10px 20px rgba(29, 78, 216, 0.22);
+}
+
+@media (max-width: 768px) {
+  .notes-card {
+    padding: 20px;
+  }
+
+  .note-title {
+    font-size: 1.6rem;
+  }
+
+  .ai-btn,
+  .save-note-btn {
+    width: 100%;
+  }
+}

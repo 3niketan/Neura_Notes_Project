@@ -1,0 +1,136 @@
+:root {
+  --bg-light: #f4f6f9;
+  --bg-dark: #111827;
+  --card-light: #ffffff;
+  --card-dark: #1f2937;
+  --text-light: #1f2937;
+  --text-dark: #e5e7eb;
+  --muted-light: #6b7280;
+  --muted-dark: #9ca3af;
+  --border-light: #d1d5db;
+  --border-dark: #374151;
+  --btn-dark: #111827;
+  --btn-dark-hover: #000000;
+}
+
+body {
+  min-height: 100vh;
+  margin: 0;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body.light-mode {
+  background: var(--bg-light);
+  color: var(--text-light);
+}
+
+body.dark-mode {
+  background: var(--bg-dark);
+  color: var(--text-dark);
+}
+
+.mode-toggle {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  z-index: 10;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+body.light-mode .mode-toggle {
+  color: var(--btn-dark);
+}
+
+body.dark-mode .mode-toggle {
+  color: var(--text-dark);
+}
+
+.auth-page .container {
+  padding: 24px 12px;
+}
+
+.login-card {
+  width: 100%;
+  max-width: 420px;
+  border: 1px solid var(--border-light);
+  border-radius: 14px;
+  background: var(--card-light);
+  box-shadow: 0 14px 30px rgba(15, 23, 42, 0.08);
+}
+
+body.dark-mode .login-card {
+  background: var(--card-dark);
+  border-color: var(--border-dark);
+}
+
+.auth-title {
+  color: inherit;
+  font-weight: 700;
+}
+
+.form-label {
+  font-weight: 600;
+  color: inherit;
+}
+
+.input-group-text {
+  background: #f8fafc;
+  border: 1px solid var(--border-light);
+  color: var(--muted-light);
+}
+
+.form-control {
+  border: 1px solid var(--border-light);
+  box-shadow: none;
+}
+
+.form-control:focus {
+  border-color: #94a3b8;
+  box-shadow: 0 0 0 0.15rem rgba(59, 130, 246, 0.12);
+}
+
+.auth-btn {
+  border-radius: 10px;
+  font-weight: 700;
+  padding: 10px;
+  background: var(--btn-dark);
+  border-color: var(--btn-dark);
+}
+
+.auth-btn:hover {
+  background: var(--btn-dark-hover);
+  border-color: var(--btn-dark-hover);
+}
+
+p a {
+  color: inherit;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+p a:hover {
+  text-decoration: underline;
+}
+
+body.dark-mode .input-group-text {
+  background: #111827;
+  border-color: var(--border-dark);
+  color: var(--muted-dark);
+}
+
+body.dark-mode .form-control {
+  background: #111827;
+  border-color: var(--border-dark);
+  color: var(--text-dark);
+}
+
+body.dark-mode .form-control::placeholder {
+  color: var(--muted-dark);
+}
+
+@media (max-width: 576px) {
+  .login-card {
+    margin: 0 8px;
+  }
+}
